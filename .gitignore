@@ -1,0 +1,47 @@
+# Virtual Environment - Complete ignoring
+venv/
+.venv/
+env/
+ENV/
+virtualenv/
+*venv/
+
+# Python packages and large binary files
+*.dylib
+*.so
+*.pyd
+*.dll
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data and logs
+data/
+*.log
+*.tmp
+*.data
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE configuration
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environment variables
+*.env
+.env
+
+# Build and distribution
+*.egg-info/
+build/
+dist/
+
