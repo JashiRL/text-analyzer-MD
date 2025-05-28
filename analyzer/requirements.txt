@@ -1,0 +1,10 @@
+nltk
+textblob
+matplotlib
+seaborn
+wordcloud
+pandas
+python-docx
+scikit-learn
+sumy
+transformers 
