@@ -1,20 +1,14 @@
-# analyzer/sentiment_analysis.py
+from transformers import pipeline
 
-from textblob import TextBlob
+classifier = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
 
 def analyze_sentiment(text):
-    blob = TextBlob(text)
-    polarity = blob.sentiment.polarity
-
-    if polarity > 0.1:
-        emotion = "joy"
-    elif polarity < -0.1:
-        emotion = "sadness"
-    else:
-        emotion = "neutral"
+    result = classifier(text[:512])[0]  
+    label = result["label"]
+    score = result["score"]
 
     return {
         "method": "short",
-        "emotion": emotion,
-        "score": round(polarity * 100, 2)
+        "emotion": label,
+        "confidence": round(score * 100, 2)
     }

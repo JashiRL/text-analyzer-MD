@@ -8,3 +8,4 @@ python-docx
 scikit-learn
 sumy
 transformers 
+PyPDF2

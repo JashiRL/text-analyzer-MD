@@ -2,6 +2,7 @@ import os
 from docx import Document
 import tkinter as tk
 from tkinter import filedialog
+import PyPDF2  
 
 def load_txt_file(path):
     with open(path, 'r', encoding='utf-8') as f:
@@ -11,18 +12,30 @@ def load_docx_file(path):
     doc = Document(path)
     return '\n'.join([para.text for para in doc.paragraphs])
 
+def load_pdf_file(path):
+    text = ""
+    with open(path, "rb") as f:
+        reader = PyPDF2.PdfReader(f)
+        for page in reader.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text + "\n"
+    return text
+
 def load_file(path):
     if path.endswith('.txt'):
         return load_txt_file(path)
     elif path.endswith('.docx'):
         return load_docx_file(path)
+    elif path.endswith('.pdf'):
+        return load_pdf_file(path)
     else:
         raise ValueError("Tipo de archivo no soportado")
 
 def load_files_from_folder(folder_path):
     contents = []
     for file in os.listdir(folder_path):
-        if file.endswith(('.txt', '.docx')):
+        if file.endswith(('.txt', '.docx', '.pdf')):
             try:
                 contents.append(load_file(os.path.join(folder_path, file)))
             except Exception as e:
@@ -30,7 +43,7 @@ def load_files_from_folder(folder_path):
     return contents
 
 def list_text_files(directory="data"):
-    files = [f for f in os.listdir(directory) if f.endswith(('.txt', '.docx'))]
+    files = [f for f in os.listdir(directory) if f.endswith(('.txt', '.docx', '.pdf'))]
     if not files:
         print("No se encontraron archivos en la carpeta.")
         return []
@@ -58,7 +71,11 @@ def open_file_dialog():
     root.withdraw()
     file_path = filedialog.askopenfilename(
         title="Selecciona un archivo",
-        filetypes=[("Archivos de texto", "*.txt"), ("Documentos Word", "*.docx")]
+        filetypes=[
+            ("Archivos de texto", "*.txt"),
+            ("Documentos Word", "*.docx"),
+            ("Archivos PDF", "*.pdf")  # Añadido soporte para PDF
+        ]
     )
     root.destroy()
     return file_path

@@ -9,7 +9,7 @@ classifier = pipeline(
     "text-classification",
     model="j-hartmann/emotion-english-distilroberta-base",
     return_all_scores=True,
-    top_k=None  # en lugar de usar return_all_scores (ya deprecated)
+    top_k=None  
 )
 
 def analyze_sentiment(text):
